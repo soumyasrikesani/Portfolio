@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soumya Sri Kesani · Data Science Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F2EC;
+    --surface: #FFFEF9;
+    --surface2: #F0EDE5;
+    --ink: #1A1814;
+    --ink2: #5C5850;
+    --ink3: #9E9A92;
+    --accent: #C65D2A;
+    --accent2: #2A5FC6;
+    --border: rgba(26,24,20,0.1);
+    --border2: rgba(26,24,20,0.06);
+    --green: #2A7A4B;
+    --amber: #A05C10;
+    --purple: #5B3FA6;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── GRID LAYOUT ── */
+  .shell {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: auto;
+    gap: 20px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .profile-card {
+    background: var(--ink);
+    color: #F5F2EC;
+    border-radius: 16px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .profile-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.15;
+  }
+  .profile-card::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: -20px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--accent2);
+    opacity: 0.12;
+  }
+
+  .avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 16px;
+    position: relative; z-index: 1;
+  }
+  .profile-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    line-height: 1.2;
+    color: #F5F2EC;
+    margin-bottom: 6px;
+    position: relative; z-index: 1;
+  }
+  .profile-title {
+    font-size: 12px;
+    color: rgba(245,242,236,0.6);
+    font-weight: 300;
+    position: relative; z-index: 1;
+    margin-bottom: 20px;
+  }
+  .profile-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative; z-index: 1;
+  }
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(245,242,236,0.75);
+  }
+  .meta-icon {
+    width: 16px; height: 16px;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .sidebar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .sidebar-card-title {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 14px;
+  }
+
+  .stat-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .stat-box {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-lbl {
+    font-size: 10px;
+    color: var(--ink3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .skill-chip-wrap { display: flex; flex-wrap: wrap; gap: 5px; }
+  .skill-chip {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--surface2);
+    color: var(--ink2);
+    border: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .edu-item { margin-bottom: 14px; }
+  .edu-item:last-child { margin-bottom: 0; }
+  .edu-deg {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .edu-school {
+    font-size: 12px;
+    color: var(--ink2);
+    margin-bottom: 2px;
+  }
+  .edu-detail {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink3);
+  }
+  .gpa-badge {
+    display: inline-block;
+    background: #E8F5EE;
+    color: #2A7A4B;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-top: 4px;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .top-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .top-bar-left {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--ink2);
+  }
+  .top-bar-left span { color: var(--ink); }
+  .top-bar-right { display: flex; gap: 8px; align-items: center; }
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #2A7A4B;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .status-text { font-size: 12px; color: var(--green); font-weight: 500; }
+  .linkedin-btn {
+    font-size: 11px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border2);
+    background: var(--surface2);
+    color: var(--ink2);
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    transition: background 0.15s;
+  }
+  .linkedin-btn:hover { background: var(--border); }
+
+  /* ── PROJECTS ── */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .section-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--ink3);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+  }
+  .project-card.ml::before { background: var(--purple); }
+  .project-card.viz::before { background: var(--green); }
+  .project-card.web::before { background: var(--amber); }
+  .project-card.db::before { background: var(--accent2); }
+
+  .project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,24,20,0.08);
+  }
+
+  .project-tag {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: inline-block;
+    letter-spacing: 0.04em;
+  }
+  .tag-ml { background: #EFEBF9; color: #5B3FA6; }
+  .tag-viz { background: #E5F3EB; color: #2A7A4B; }
+  .tag-web { background: #FBF0E3; color: #A05C10; }
+  .tag-db  { background: #E3EBF9; color: #2A5FC6; }
+
+  .project-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .project-desc {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .stack-badge {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--surface2);
+    color: var(--ink3);
+    border: 1px solid var(--border2);
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .timeline { position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .tl-item {
+    padding-left: 28px;
+    position: relative;
+    margin-bottom: 22px;
+  }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot {
+    position: absolute;
+    left: 0; top: 6px;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    border: 2px solid var(--surface);
+    background: var(--ink3);
+  }
+  .tl-item.current .tl-dot { background: var(--accent); }
+
+  .tl-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .tl-org {
+    font-size: 11px;
+    color: var(--ink3);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 6px;
+  }
+  .tl-desc {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+  .current-badge {
+    display: inline-block;
+    background: #FFF0EA;
+    color: var(--accent);
+    font-size: 9px;
+    font-family: 'DM Mono', monospace;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── TWO-COL BOTTOM ── */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+  }
+
+  .skill-category { margin-bottom: 16px; }
+  .skill-category:last-child { margin-bottom: 0; }
+  .skill-cat-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 7px;
+  }
+
+  .bar-row { display: flex; flex-direction: column; gap: 5px; }
+  .bar-item { display: flex; align-items: center; gap: 8px; }
+  .bar-name { font-size: 11px; color: var(--ink2); width: 80px; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 2px; background: var(--accent); animation: growBar 1s ease both; }
+  @keyframes growBar { from { width: 0 !important; } }
+
+  .pub-card {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 10px;
+  }
+  .pub-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 4px; line-height: 1.4; }
+  .pub-venue { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--ink3); }
+  .pub-year {
+    display: inline-block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--ink2);
+    margin-top: 8px;
+  }
+
+  /* FOOTER */
+  .footer-bar {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 11px;
+    color: var(--ink3);
+    font-family: 'DM Mono', monospace;
+    padding: 8px 0 0;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .shell { grid-template-columns: 1fr; padding: 16px; }
+    .sidebar, .main { grid-column: 1; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .bottom-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up:nth-child(1) { animation-delay: 0.05s; }
+  .fade-up:nth-child(2) { animation-delay: 0.1s; }
+  .fade-up:nth-child(3) { animation-delay: 0.15s; }
+  .fade-up:nth-child(4) { animation-delay: 0.2s; }
+  .fade-up:nth-child(5) { animation-delay: 0.25s; }
+  .fade-up:nth-child(6) { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar">
+
+    <div class="profile-card fade-up">
+      <div class="avatar">SK</div>
+      <div class="profile-name">Soumya Sri Kesani</div>
+      <div class="profile-title">M.S. Data Science &amp; Analytics</div>
+      <div class="profile-meta">
+        <div class="meta-row">
+          <svg class="meta-icon" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M8 4v4l2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Expected May 2026
+        </div>
+        <div class="meta-row">
+          <svg class="meta-icon" fill="none" viewBox="0 0 16 16"><path d="M8 2C5.79 2 4 3.79 4 6c0 3.5 4 8 4 8s4-4.5 4-8c0-2.21-1.79-4-4-4z" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
+          Norman, OK
+        </div>
+        <div class="meta-row">
+          <svg class="meta-icon" fill="none" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 6l6 4 6-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          soumyakesani@gmail.com
+        </div>
+        <div class="meta-row">
+          <svg class="meta-icon" fill="none" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M5 6h1.5v5H5zM8 6v5m0-3c0-1.1.9-2 2-2s2 .9 2 2v3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          linkedin.com/in/soumya-sri-kesani
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-card fade-up">
+      <div class="sidebar-card-title">At a glance</div>
+      <div class="stat-pair">
+        <div class="stat-box">
+          <div class="stat-num">3.90</div>
+          <div class="stat-lbl">GPA</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">6</div>
+          <div class="stat-lbl">Projects</div>
+        </div>
+      </div>
+      <div class="stat-pair">
+        <div class="stat-box">
+          <div class="stat-num">5+</div>
+          <div class="stat-lbl">Languages</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">1</div>
+          <div class="stat-lbl">Publication</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-card fade-up">
+      <div class="sidebar-card-title">Education</div>
+      <div class="edu-item">
+        <div class="edu-deg">M.S. Data Science &amp; Analytics</div>
+        <div class="edu-school">University of Oklahoma</div>
+        <div class="edu-detail">Aug 2024 – May 2026</div>
+        <span class="gpa-badge">GPA 3.90 / 4.00</span>
+      </div>
+      <div class="edu-item">
+        <div class="edu-deg">B.Tech Computer Science</div>
+        <div class="edu-school">CVR College of Engineering, India</div>
+        <div class="edu-detail">Graduated May 2024</div>
+        <span class="gpa-badge">GPA 3.07 / 4.00</span>
+      </div>
+    </div>
+
+    <div class="sidebar-card fade-up">
+      <div class="sidebar-card-title">Core tools</div>
+      <div class="skill-chip-wrap">
+        <span class="skill-chip">Python</span>
+        <span class="skill-chip">R</span>
+        <span class="skill-chip">SQL</span>
+        <span class="skill-chip">Tableau</span>
+        <span class="skill-chip">Power BI</span>
+        <span class="skill-chip">Scikit-learn</span>
+        <span class="skill-chip">Pandas</span>
+        <span class="skill-chip">ARIMA</span>
+        <span class="skill-chip">Azure</span>
+        <span class="skill-chip">Snowflake</span>
+        <span class="skill-chip">Django</span>
+        <span class="skill-chip">Git</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <main class="main">
+
+    <div class="top-bar fade-up">
+      <div class="top-bar-left">
+        Portfolio · <span>Data Science &amp; Analytics</span>
+      </div>
+      <div class="top-bar-right">
+        <span class="status-dot"></span>
+        <span class="status-text">Open to opportunities</span>
+        <a class="linkedin-btn" href="https://linkedin.com/in/soumya-sri-kesani-6a7355350" target="_blank">LinkedIn ↗</a>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="panel fade-up">
+      <div class="section-header">
+        <div class="section-title">Projects</div>
+        <div class="section-count">07 works</div>
+      </div>
+      <div class="projects-grid">
+
+        <div class="project-card ml fade-up">
+          <span class="project-tag tag-ml">Time-Series · ML</span>
+          <div class="project-title">US Natural Gas Consumption Forecasting</div>
+          <div class="project-desc">Analyzed 627 months of EIA data. Built and compared ARIMA, ETS, and regression models with full validation pipeline.</div>
+          <div class="project-stack">
+            <span class="stack-badge">Python</span>
+            <span class="stack-badge">ARIMA</span>
+            <span class="stack-badge">ETS</span>
+            <span class="stack-badge">Pandas</span>
+            <span class="stack-badge">Matplotlib</span>
+          </div>
+        </div>
+
+        <div class="project-card ml fade-up">
+          <span class="project-tag tag-ml">Clustering · Anomaly</span>
+          <div class="project-title">Energy Forecasting in Steel Manufacturing</div>
+          <div class="project-desc">35,040 records. Regression-based forecasting, K-Means clustering, and anomaly detection on industrial energy data.</div>
+          <div class="project-stack">
+            <span class="stack-badge">Python</span>
+            <span class="stack-badge">Scikit-learn</span>
+            <span class="stack-badge">K-Means</span>
+            <span class="stack-badge">Regression</span>
+          </div>
+        </div>
+
+        <div class="project-card ml fade-up">
+          <span class="project-tag tag-ml">Healthcare · ML</span>
+          <div class="project-title">Chronic Heart Disease Prediction</div>
+          <div class="project-desc">Engineered features from biometric wearable signals. Built classifiers to flag high-risk patients with real-time alert integration.</div>
+          <div class="project-stack">
+            <span class="stack-badge">Python</span>
+            <span class="stack-badge">NumPy</span>
+            <span class="stack-badge">Pandas</span>
+            <span class="stack-badge">Scikit-learn</span>
+          </div>
+        </div>
+
+        <div class="project-card viz fade-up">
+          <span class="project-tag tag-viz">Visualization</span>
+          <div class="project-title">Stock Market Interactive Dashboard</div>
+          <div class="project-desc">Cleaned stock datasets and designed interactive dashboards visualizing time-series trends and performance indicators.</div>
+          <div class="project-stack">
+            <span class="stack-badge">Tableau</span>
+            <span class="stack-badge">Excel</span>
+          </div>
+        </div>
+
+        <div class="project-card web fade-up">
+          <span class="project-tag tag-web">Web · Scraping</span>
+          <div class="project-title">E-Commerce Price Comparison Tool</div>
+          <div class="project-desc">Built automated scraping pipelines with multi-site comparison logic and a full Django web application backend.</div>
+          <div class="project-stack">
+            <span class="stack-badge">Python</span>
+            <span class="stack-badge">Django</span>
+            <span class="stack-badge">SQLite</span>
+            <span class="stack-badge">Web Scraping</span>
+          </div>
+        </div>
+
+        <div class="project-card db fade-up">
+          <span class="project-tag tag-db">Database · Cloud</span>
+          <div class="project-title">National Parks Service Database</div>
+          <div class="project-desc">Designed ER diagrams and relational schema. Deployed a fully optimized database system on Microsoft Azure.</div>
+          <div class="project-stack">
+            <span class="stack-badge">SQL</span>
+            <span class="stack-badge">MySQL</span>
+            <span class="stack-badge">Azure</span>
+          </div>
+        </div>
+
+        <div class="project-card fade-up" style="grid-column: 1 / -1; border-top: 3px solid var(--accent); background: var(--surface);">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+            <span class="project-tag tag-web" style="margin-bottom:0; background:#FFF0EA; color:var(--accent);">Geospatial · Remote Sensing</span>
+            <span style="font-size:10px; font-family:'DM Mono',monospace; background:#FFF0EA; color:var(--accent); padding:2px 8px; border-radius:4px; letter-spacing:0.05em; border: 1px solid rgba(198,93,42,0.2);">IN PROGRESS</span>
+          </div>
+          <div class="project-title" style="font-size:15px;">African Wildfire Detection &amp; Burned Area Estimation — Guinean Lowland Forests</div>
+          <div class="project-desc" style="margin-bottom:14px;">Processes multi-year VIIRS active fire satellite data (2013–2024) across 53 African countries to analyze wildfire patterns in the East-West Guinean Lowland Forests ecoregion. Implements spatio-temporal graph clustering to identify discrete fire events from raw hotspot detections. Fire perimeter polygons are generated via concave hull algorithms, and missing burned-area data inside perimeters is recovered using nearest-neighbor spatial interpolation (IDW). Outputs include annual raster layers of fire frequency, fire radiative power (FRP), and multi-year anomaly maps to support conservation monitoring.</div>
+          <div class="project-stack">
+            <span class="stack-badge">R</span>
+            <span class="stack-badge">sf / terra</span>
+            <span class="stack-badge">VIIRS Satellite Data</span>
+            <span class="stack-badge">igraph</span>
+            <span class="stack-badge">spdep</span>
+            <span class="stack-badge">gstat (IDW)</span>
+            <span class="stack-badge">concaveman</span>
+            <span class="stack-badge">ggplot2</span>
+            <span class="stack-badge">GIS / Ecoregions</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="exp-panel fade-up">
+      <div class="section-header">
+        <div class="section-title">Experience</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item current">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Service Delivery Specialist <span class="current-badge">Current</span></div>
+          <div class="tl-org">University of Oklahoma · Dec 2025 – Present</div>
+          <div class="tl-desc">Managed security groups, access controls, and telecom workflows. Improved ticket resolution efficiency through structured documentation.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-title">IT Service Specialist</div>
+          <div class="tl-org">University of Oklahoma · May 2025 – Nov 2025</div>
+          <div class="tl-desc">Provided Tier-1 technical support for students, faculty, and staff. Assisted in IT infrastructure documentation and workflow optimization.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Research Assistant</div>
+          <div class="tl-org">CVR College of Engineering · Jan 2023 – May 2023</div>
+          <div class="tl-desc">Researched Geographic Alert Systems. Co-authored and published a paper in the International Journal of Computer Engineering &amp; Research Technology (IJCERT).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM TWO-COL -->
+    <div class="bottom-grid fade-up">
+
+      <div class="panel">
+        <div class="section-header">
+          <div class="section-title">Skills</div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-cat-label">ML &amp; Statistics</div>
+          <div class="bar-row">
+            <div class="bar-item"><span class="bar-name">Forecasting</span><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div></div>
+            <div class="bar-item"><span class="bar-name">Regression</span><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div></div>
+            <div class="bar-item"><span class="bar-name">Clustering</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div></div>
+            <div class="bar-item"><span class="bar-name">Anomaly Det.</span><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div></div>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-cat-label">Visualization</div>
+          <div class="bar-row">
+            <div class="bar-item"><span class="bar-name">Tableau</span><div class="bar-track"><div class="bar-fill" style="width:85%; background:#2A7A4B"></div></div></div>
+            <div class="bar-item"><span class="bar-name">Power BI</span><div class="bar-track"><div class="bar-fill" style="width:78%; background:#2A7A4B"></div></div></div>
+            <div class="bar-item"><span class="bar-name">Matplotlib</span><div class="bar-track"><div class="bar-fill" style="width:82%; background:#2A7A4B"></div></div></div>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-cat-label">Data Engineering</div>
+          <div class="bar-row">
+            <div class="bar-item"><span class="bar-name">Python</span><div class="bar-track"><div class="bar-fill" style="width:90%; background:#5B3FA6"></div></div></div>
+            <div class="bar-item"><span class="bar-name">SQL</span><div class="bar-track"><div class="bar-fill" style="width:84%; background:#5B3FA6"></div></div></div>
+            <div class="bar-item"><span class="bar-name">Azure / Cloud</span><div class="bar-track"><div class="bar-fill" style="width:70%; background:#5B3FA6"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="section-header">
+          <div class="section-title">Publication</div>
+        </div>
+        <div class="pub-card">
+          <div class="pub-title">Geographic Alert Systems: Research &amp; Implementation</div>
+          <div class="pub-venue">IJCERT — International Journal of Computer Engineering &amp; Research Technology</div>
+          <span class="pub-year">2023</span>
+        </div>
+
+        <div style="margin-top: 22px;">
+          <div class="section-header" style="margin-bottom: 10px;">
+            <div class="section-title" style="font-size:15px;">Objective</div>
+          </div>
+          <p style="font-size:12px; color: var(--ink2); line-height:1.7;">
+            Results-driven Data Science graduate student with hands-on experience in statistical modeling, time-series forecasting, and interactive dashboarding. Passionate about applying machine learning and visualization tools to support data-driven decision-making.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <div class="footer-bar">
+    soumya sri kesani · data science portfolio · 2025–2026
+  </div>
+
+</div>
+
+</body>
+</html>
